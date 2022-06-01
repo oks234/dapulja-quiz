@@ -16,13 +16,25 @@
 }
 
 @layer components {
-  .menu-icon {
-    display: none;
+  .btn {
+    @apply flex-center h-10 bg-primary text-white rounded-lg font-bold;
   }
+  .btn.reversed {
+    @apply text-primary border border-primary bg-white
+  }
+  .btn.gray {
+    @apply text-gray-500 bg-gray-100
+  }
+}
 
-  @media screen and (max-width: 900px) {
-    .menu-icon {
-      display: block;
-    }
+@layer utilities {
+  .fixed-full-size {
+    @apply fixed inset-0;
+  }
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
 }

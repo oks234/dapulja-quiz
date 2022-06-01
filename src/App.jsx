@@ -1,14 +1,17 @@
-import React from "react"
-import { Routes, Route } from "react-router-dom"
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import Nav from "./components/Nav"
-
-import Home from "./pages/Home"
-import QuizSession from "./pages/QuizSession"
-import QuizModal from "./pages/QuizModal"
-import Result from "./pages/Result"
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import QuizSession from "./pages/QuizSession";
+// import QuizModal from "./pages/QuizModal";
+import Result from "./pages/Result";
 
 function App() {
+  const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   // 메인화면 데이터s
   const workbookList = [
     {
@@ -41,7 +44,7 @@ function App() {
       subject: "영어",
       src: "",
     },
-  ]
+  ];
 
   const quizzes = [
     {
@@ -69,12 +72,12 @@ function App() {
       selected: "4",
       dtype: "단답형",
     },
-  ]
+  ];
   // result
   const resultSummary = {
     correct: 2,
     incorrect: 3,
-  }
+  };
   const resultSheet = [
     {
       seq: 1,
@@ -106,33 +109,21 @@ function App() {
       value: "1",
       dtype: "단답형",
     },
-  ]
+  ];
   return (
-    <section style={{ textAlign: "center" }}>
-      <Nav />
-      <Routes>
-        <Route path='/' element={<Home workbookList={workbookList} />} />
-        <Route
-          path='/quiz'
-          element={
-            <QuizSession title='중2 랜덤 과목 문제 풀기' quizzes={quizzes} />
-          }
-        />
-        <Route
-          path='/quiz/modal'
-          element={
-            <QuizModal title='중2 랜덤 과목 문제 풀기' quizzes={quizzes} />
-          }
-        />
-        <Route
-          path='/result'
-          element={
-            <Result resultSummary={resultSummary} resultSheet={resultSheet} />
-          }
-        />
-      </Routes>
-    </section>
-  )
+    <>
+      <Header {...{ isMobileMenuVisible, setIsMobileMenuVisible, isLoggedIn, setIsLoggedIn }} />
+      <main className="min-h-mobile-main md:min-h-tablet-main">
+        <Routes>
+          <Route path="/" element={<Home workbookList={workbookList} />} />
+          <Route path="/quiz" element={<QuizSession title="중2 랜덤 과목 문제 풀기" quizzes={quizzes} />} />
+          {/* <Route path="/quiz/modal" element={<QuizModal title="중2 랜덤 과목 문제 풀기" quizzes={quizzes} />} /> */}
+          <Route path="/result" element={<Result resultSummary={resultSummary} resultSheet={resultSheet} />} />
+        </Routes>
+      </main>
+      <Footer />
+    </>
+  );
 }
 
-export default App
+export default App;
